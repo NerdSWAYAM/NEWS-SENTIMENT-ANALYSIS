@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>News Sentiment Analysis</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <!-- <link rel="stylesheet" href="static/style.css"> -->
   
 </head>
 <body>
   <div class="container">
     <h1>News Sentiment Analysis</h1>
-    <p class="subtitle">Click the button below to scrape and analyze news sentiment</p>
+    <p class="subtitle">See what mood the news contains!!!</p>
 
     <!-- clicking this button issues a GET /scrape and the server returns a rendered page -->
     <form action="{{ url_for('scrape_and_analyze') }}" method="get">
