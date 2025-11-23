@@ -1,141 +1,334 @@
-body{
-    font-family: Arial, sans-serif;
-    background-color: #B388EB;
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-.container{
-    background-color: white;
-    /* width: 90%; */
-    height: 80%;
-    /* max-width: 80% */
-    /* max-height: 100vh; */
-    margin: 40px 40px 40px 40px;
-    padding: 10px 40px 40px 40px;
-    border-radius: 16px;
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #B388EB 0%, #9a6ed3 50%, #8B5FBF 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+.container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 50px;
+    border-radius: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    box-shadow: none;
+    justify-content: flex-start;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
     box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+    animation: containerFadeIn 0.6s ease-out;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+h1 {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    color: #9a6ed3;
+    text-align: center;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: clamp(16px, 2vw, 18px);
+    color: #666;
+    text-align: center;
+    margin: 0 0 48px 0;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+button {
+    background: linear-gradient(135deg, #9a6ed3 0%, #8B5FBF 100%);
+    color: #ffffff;
+    padding: 18px 48px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(154, 110, 211, 0.35);
+    position: relative;
     overflow: hidden;
 }
 
-button{
-    background-color: #9a6ed3;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 20px 40px 20px 40px;
-}
-h1{
-    font-family:'Arial Black', sans-serif;
-    font-size: 60px;
-    color: #9a6ed3;
-}
-p{
-    font-size: 20px;
-    color: black;
-    margin: 40px 0 40px 0;
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
 }
 
+button:hover::before {
+    width: 300px;
+    height: 300px;
+}
 
-/* ... Your existing CSS code above ... */
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(154, 110, 211, 0.45);
+    background: linear-gradient(135deg, #a87de0 0%, #9a6ed3 100%);
+}
 
-/* Result Section Wrapper */
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(154, 110, 211, 0.35);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(154, 110, 211, 0.3);
+}
+
+/* ============================================
+   RESULT SECTION
+   ============================================ */
 .result {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: fadeIn 0.5s ease-in-out; /* Adds a smooth fade-in effect */
+    animation: fadeInUp 0.6s ease-out;
 }
 
-/* Error Message Styling */
+/* ============================================
+   ERROR MESSAGE
+   ============================================ */
 .error-message {
     width: 100%;
-    background-color: #ffe6e6;
-    color: #d63031;
-    border: 1px solid #fab1a0;
-    padding: 15px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #ffe6e6 0%, #ffd6d6 100%);
+    color: #c0392b;
+    border: 2px solid #fab1a0;
+    padding: 18px 24px;
+    border-radius: 12px;
     text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(214, 48, 49, 0.1);
+    animation: shake 0.5s ease-in-out;
 }
 
-/* Success/Status Message Styling */
+/* ============================================
+   SUCCESS/STATUS MESSAGE
+   ============================================ */
 .message {
-    font-size: 22px;
-    color: #555;
+    font-size: clamp(18px, 2.5vw, 20px);
+    color: #444;
     text-align: center;
     margin-bottom: 40px;
-    line-height: 1.5;
+    line-height: 1.7;
+    font-weight: 500;
+    padding: 0 20px;
 }
 
-/* Container for the Stat Boxes */
+/* ============================================
+   STATS CONTAINER
+   ============================================ */
 .stats-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Space between boxes */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
     width: 100%;
-    flex-wrap: wrap; /* Allows boxes to stack on smaller screens */
+    max-width: 700px;
+    margin-top: 8px;
 }
 
-/* Individual Stat Cards */
+/* ============================================
+   STAT BOXES
+   ============================================ */
 .stat-box {
-    background-color: #f8f4fc; /* A very light tint of your purple */
-    border: 2px solid #eee;
-    border-radius: 10px;
-    padding: 25px;
-    flex: 1; /* Makes boxes equal width */
-    min-width: 200px; /* Prevents them from getting too small */
+    background: linear-gradient(135deg, #f8f4fc 0%, #f0e8f8 100%);
+    border: 2px solid #e8ddf5;
+    border-radius: 16px;
+    padding: 32px 24px;
     text-align: center;
-    transition: transform 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-.stat-box:hover {
-    transform: translateY(-5px); /* Subtle lift effect on hover */
+.stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    /* left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #9a6ed3, #8B5FBF);
+    transform: scaleX(0);
+    transition: transform 0.3s ease; */
+}
+
+.stat-box:hover::before {
+    transform: scaleX(1);
+}
+
+/* .stat-box:hover {
+    transform: translateY(-8px);
     border-color: #9a6ed3;
-}
+    box-shadow: 0 12px 32px rgba(154, 110, 211, 0.2);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f4fc 100%);
+} */
 
-/* Labels (e.g., "Overall Sentiment") */
+/* ============================================
+   STAT LABELS & VALUES
+   ============================================ */
 .stat-label {
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
     color: #888;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    margin-bottom: 16px;
+    display: block;
 }
 
-/* The actual data values */
 .stat-value {
-    font-size: 32px;
-    font-weight: 900; /* Extra bold */
-    color: #333;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    color: #2c3e50;
+    line-height: 1.2;
+    margin-top: 8px;
 }
 
-/* Dynamic Sentiment Colors */
+.overall-sentiment {
+    display: inline-block;
+    padding: 4px 0;
+    font-size: clamp(28px, 4vw, 40px);
+}
+
+/* ============================================
+   SENTIMENT COLORS
+   ============================================ */
 .sentiment-positive {
-    color: #27ae60; /* Green */
+    color: #27ae60;
 }
 
 .sentiment-negative {
-    color: #c0392b; /* Red */
+    color: #e74c3c;
 }
 
 .sentiment-neutral {
-    color: #7f8c8d; /* Grey */
+    color: #7f8c8d;
 }
 
-/* Simple Animation Keyframes */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-4px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(4px);
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    .container {
+        padding: 40px 30px;
+        border-radius: 20px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .stat-box {
+        padding: 28px 20px;
+    }
+
+    button {
+        padding: 16px 40px;
+        font-size: 16px;
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 32px 24px;
+    }
+
+    .subtitle {
+        margin-bottom: 36px;
+    }
+
+    .message {
+        font-size: 16px;
+        margin-bottom: 32px;
+    }
 }
