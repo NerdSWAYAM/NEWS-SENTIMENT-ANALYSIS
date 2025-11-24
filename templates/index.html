@@ -1,47 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>News Sentiment Analysis</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
+
 <body>
   <div class="container">
-    <h1>News Sentiment Analysis</h1>
-    <p class="subtitle">Click the button below to scrape and analyze news sentiment from various sources</p>
+    <header class="app-header">
+      <h1>News Sentiment Analysis</h1>
+      <!-- <p class="subtitle">Click the button below to scrape and analyze news sentiment from various sources</p> -->
+    </header>
 
-    <form action="{{ url_for('scrape_and_analyze') }}" method="get">
-      <button type="submit">Scrape &amp; Analyze Headlines</button>
-    </form>
+    <div class="main-content">
+      <div class="left-section">
+        <form action="{{ url_for('scrape_and_analyze') }}" method="get" class="controls-form">
+          <div class="search-group">
+            <input type="text" placeholder="Search topic..." name="query" value="{{ query or '' }}" />
+            <button type="submit" class="btn-search">Search</button>
+          </div>
 
-    {% if error %}
-      <div class="result">
-        <div class="error-message">{{ error }}</div>
-      </div>
-    {% endif %}
+          <div class="category-wrapper">
+            <label for="category-select">Choose a Category:</label>
+            <select name="category" id="category-select" class="category-select">
+              <option value="general" {% if category=='general' %}selected{% endif %}>General</option>
+              <option value="business" {% if category=='business' %}selected{% endif %}>Business</option>
+              <option value="entertainment" {% if category=='entertainment' %}selected{% endif %}>Entertainment</option>
+              <option value="health" {% if category=='health' %}selected{% endif %}>Health</option>
+              <option value="science" {% if category=='science' %}selected{% endif %}>Science</option>
+              <option value="sports" {% if category=='sports' %}selected{% endif %}>Sports</option>
+              <option value="technology" {% if category=='technology' %}selected{% endif %}>Technology</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-scrape">Scrape &amp; Analyze Headlines</button>
+        </form>
 
-    {% if message %}
-      <div class="result">
-        <div class="message">{{ message }}</div>
+        {% if error %}
+        <div class="result error-result">
+          <div class="error-message">{{ error }}</div>
+        </div>
+        {% endif %}
 
-        <div class="stats-container">
-          <div class="stat-box">
-            <div class="stat-label">Overall Sentiment</div>
-            <div class="stat-value">
-              {% set cls = 'sentiment-neutral' %}
-              {% if overall_sentiment == 'positive' %}{% set cls = 'sentiment-positive' %}{% elif overall_sentiment == 'negative' %}{% set cls = 'sentiment-negative' %}{% endif %}
-              <span class="overall-sentiment {{ cls }}">{{ sentiment_text or overall_sentiment|upper }}</span>
+        {% if message %}
+        <div class="result stats-result">
+          <div class="message">{{ message }}</div>
+
+          <div class="stats-container">
+            <div class="stat-box">
+              <div class="stat-label">Overall Sentiment</div>
+              <div class="stat-value">
+                {% set cls = 'sentiment-neutral' %}
+                {% if overall_sentiment == 'positive' %}{% set cls = 'sentiment-positive' %}{% elif overall_sentiment ==
+                'negative' %}{% set cls = 'sentiment-negative' %}{% endif %}
+                <span class="overall-sentiment {{ cls }}">{{ sentiment_text or overall_sentiment|upper }}</span>
+              </div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-label">Average Score</div>
+              <div class="stat-value">{{ '%.2f'|format(average_score|float) }}</div>
             </div>
           </div>
+        </div>
+        {% endif %}
+      </div>
+    
 
-          <div class="stat-box">
-            <div class="stat-label">Average Score</div>
-            <div class="stat-value">{{ '%.2f'|format(average_score|float) }}</div>
+      <div class="right-section">
+        {% if top5 %}
+        <div class="top5-wrapper">
+          <!-- <h2>Top 5 Headlines</h2> -->
+          <div class="headlines-list">
+            {% for headline in top5 %}
+            <div class="headline-item">
+              <div class="headline-header">
+                <span class="headline-rank">#{{ loop.index }}</span>
+                <span class="headline-source">{{ headline.source or 'Unknown' }}</span>
+              </div>
+              <div class="headline-title">{{ headline.title }}</div>
+              <div class="headline-footer">
+                {% set hcls = 'sentiment-neutral' %}
+                {% if headline.sentiment == 'positive' %}{% set hcls = 'sentiment-positive' %}{% elif headline.sentiment
+                == 'negative' %}{% set hcls = 'sentiment-negative' %}{% endif %}
+                <span class="sentiment-badge {{ hcls }}">{{ headline.sentiment|upper }}</span>
+                <span class="sentiment-score">Score: {{ '%.2f'|format(headline.score|float) }}</span>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
-      </div> 
-    {% endif %}
+        {% endif %}
+      </div>
+    </div>
   </div>
 </body>
+
 </html>

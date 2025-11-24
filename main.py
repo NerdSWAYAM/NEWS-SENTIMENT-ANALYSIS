@@ -14,14 +14,15 @@ def home():
 
 @app.route('/scrape', methods=['GET'])
 def scrape_and_analyze():
-    
-    headlines = fetch_headlines()
+    category = request.args.get('category')
+    query = request.args.get('query', None)
+    headlines = fetch_headlines(category=category, query=query)
 
     if not headlines:
         # support both rendered page and API call
         if request.args.get('api') == '1' or request.accept_mimetypes.best == 'application/json':
             return jsonify({"error": "No headlines found"}), 404
-        return render_template('index.html', error="No headlines found", data=[])
+        return render_template('index.html', error="No headlines found", data=[], category=category, query=query)
 
     headlines_with_sentiment = analyze_sentiment(headlines)  # expected: list of dicts with 'score' key
     top5 = sorted(headlines_with_sentiment, key=lambda x: x.get("score", 0), reverse=True)[:5]
@@ -82,7 +83,9 @@ def scrape_and_analyze():
         sentiment_text=sentiment_text,
         average_score=average_score,
         data=headlines_with_sentiment,
-        top5=top5
+        top5=top5,
+        category=category,
+        query=query
     )
 
 

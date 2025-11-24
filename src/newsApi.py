@@ -1,17 +1,17 @@
 #419f0308d1a14c66a90978c3bdeeb3ee
 import requests
 from datetime import date
-from .config import API_KEY, NEWS_URL
+from src.config import API_KEY, NEWS_URL
 
-
-def fetch_headlines():
+def fetch_headlines(category, query=""):
     params = {
         "language": "en",
         "pageSize": 100,
         "apiKey": API_KEY,
-        # "category": "technology",
-        # "country": "in"
+        "category": category,
+        "q": query
     }
+
     resp = requests.get(NEWS_URL, params=params)
     data = resp.json()
     headlines = []
@@ -27,7 +27,7 @@ def headlines_for_db():
         "language": "en",
         "pageSize": 100,
         "apiKey": API_KEY,
-        # "category": "technology",
+        "category": "technology",
         # "country": "in"
     }
     resp = requests.get(NEWS_URL, params=params)
