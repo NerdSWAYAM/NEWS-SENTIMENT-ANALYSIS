@@ -18,7 +18,9 @@ def analyze_sentiment(articles):
         return []
 
     # Calculate scores
-    df['score'] = df['title'].apply(lambda title: sia.polarity_scores(title)['compound'])
+    combine = df['title'] + ' ' + df['content']
+    combine = combine.astype(str)
+    df['score'] = combine.apply(lambda title: sia.polarity_scores(title)['compound'])
     
     # Assign labels based on score
     def get_label(score):
@@ -30,6 +32,6 @@ def analyze_sentiment(articles):
 
     # Convert the DataFrame back to a list of dictionaries for the database/API
     # We only keep relevant columns
-    result_data = df[['source', 'title', 'sentiment', 'score']].to_dict(orient='records')
+    result_data = df[['source', 'title', 'content', 'sentiment', 'score']].to_dict(orient='records')
     
     return result_data

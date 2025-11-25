@@ -67,20 +67,34 @@
         </div>
         {% endif %}
       </div>
-    
+
 
       <div class="right-section">
-        {% if top5 %}
+        {% if data %}
         <div class="top5-wrapper">
           <!-- <h2>Top 5 Headlines</h2> -->
           <div class="headlines-list">
-            {% for headline in top5 %}
+            {% for headline in data %}
             <div class="headline-item">
               <div class="headline-header">
                 <span class="headline-rank">#{{ loop.index }}</span>
                 <span class="headline-source">{{ headline.source or 'Unknown' }}</span>
               </div>
               <div class="headline-title">{{ headline.title }}</div>
+
+              <div class="headline-details">
+                {% if headline.image %}
+                <div class="headline-image-container">
+                  <img src="{{ headline.image }}" alt="News Image" class="headline-image"
+                    onerror="this.style.display='none'">
+                </div>
+                {% endif %}
+                <p class="headline-text">{{ headline.content or headline.description or 'No content available.' }}</p>
+                {% if headline.url %}
+                <a href="{{ headline.url }}" class="read-more">Read full article &rarr;</a>
+                {% endif %}
+              </div>
+
               <div class="headline-footer">
                 {% set hcls = 'sentiment-neutral' %}
                 {% if headline.sentiment == 'positive' %}{% set hcls = 'sentiment-positive' %}{% elif headline.sentiment
@@ -100,7 +114,9 @@
   <!-- FOOTER -->
   <footer>
     <div class="foot">
-      <a href="https://github.com/LightYagami625">GitHub</a> | <a href="https://www.linkedin.com/in/swayam-kesarkar-b05261272/">LinkedIn</a> | <a href="mailto:swayamkesarkar625@gmail.com">Gmail</a><br>
+      <a href="https://github.com/LightYagami625">GitHub</a> | <a
+        href="https://www.linkedin.com/in/swayam-kesarkar-b05261272/">LinkedIn</a> | <a
+        href="mailto:swayamkesarkar625@gmail.com">Gmail</a><br>
       <p>Developed and Built by -SWAYAM KESARKAR</p>
     </div>
   </footer>

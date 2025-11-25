@@ -251,12 +251,65 @@ select:focus {
     padding: 1.5rem;
     border-radius: 12px;
     border: 1px solid var(--border-color);
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
+    position: relative;
+    transform-origin: center;
+    margin: 11px;
 }
 
 .headline-item:hover {
-    transform: translateY(-2px);
+    transform: scale(1.02);
     border-color: var(--primary-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.headline-details {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.headline-item:hover .headline-details {
+    display: block;
+}
+
+.headline-image-container {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.headline-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: 250px;
+}
+
+.headline-text {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.read-more {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.read-more:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }
 
 .headline-header {
@@ -346,7 +399,7 @@ select:focus {
 .foot {
     border-radius: 10px;
     /* padding: 10px 200px 10px 200px; */
-    margin-top: 20px;
+    margin-top: 60px;
     text-align: center;
     /* background-color: var(--surface-color); */
     color: #908caa;

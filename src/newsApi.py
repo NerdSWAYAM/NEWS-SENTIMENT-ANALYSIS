@@ -2,7 +2,8 @@
 import requests
 from datetime import date
 from src.config import API_KEY, NEWS_URL
-
+# API_KEY = "419f0308d1a14c66a90978c3bdeeb3ee"
+# NEWS_URL = "https://newsapi.org/v2/top-headlines"
 def fetch_headlines(category, query=""):
     params = {
         "language": "en",
@@ -19,6 +20,9 @@ def fetch_headlines(category, query=""):
         headlines.append({
             "source": article.get("source", {}).get("name"),
             "title": article.get("title"),
+            "url": article.get("url"),
+            "content": article.get("content"),
+            "image": article.get("urlToImage"),
         })
     return headlines
 
@@ -38,6 +42,9 @@ def headlines_for_db():
             "source": article.get("source", {}).get("name"),
             "title": article.get("title"),
             "date": date.today().isoformat(),
+            "url": article.get("url"),
+            "content": article.get("content"),
+            "image": article.get("urlToImage"),
         })
     return headlines
 

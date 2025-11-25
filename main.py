@@ -25,7 +25,15 @@ def scrape_and_analyze():
         return render_template('index.html', error="No headlines found", data=[], category=category, query=query)
 
     headlines_with_sentiment = analyze_sentiment(headlines)  # expected: list of dicts with 'score' key
-    top5 = sorted(headlines_with_sentiment, key=lambda x: x.get("score", 0), reverse=True)[:5]
+# Merge original fields (url, image, content) back into the sentiment results
+    for i, article in enumerate(headlines):
+        if i < len(headlines_with_sentiment):
+            headlines_with_sentiment[i].update({
+                "url": article.get("url"),
+                "image": article.get("image"),
+                "content": article.get("content")
+            })
+    # top5 = sorted(headlines_with_sentiment, key=lambda x: x.get("score", 0), reverse=True)[:5]
 
     if headlines_with_sentiment:
         # robustly extract numeric scores
@@ -83,7 +91,7 @@ def scrape_and_analyze():
         sentiment_text=sentiment_text,
         average_score=average_score,
         data=headlines_with_sentiment,
-        top5=top5,
+        # top5=top5,
         category=category,
         query=query
     )
