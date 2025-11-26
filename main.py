@@ -12,6 +12,10 @@ app = flask.Flask(__name__, static_folder='static', static_url_path='/static', t
 def home():
     return render_template('index.html')
 
+@app.route('/health')
+def health_check():
+    return "OK", 200
+
 @app.route('/scrape', methods=['GET'])
 def scrape_and_analyze():
     category = request.args.get('category')
