@@ -2,6 +2,9 @@
 
 News-Senti is a web-based sentiment analysis tool that fetches the latest news headlines and evaluates their sentiment using Natural Language Processing (NLP). It categorizes news into Positive, Negative, or Neutral and provides a sentiment score for each article.
 
+## Demo Screen Shot
+![sc](static/sc01.png)
+
 ## Features
 
 - **Live News Fetching**: Retrieves real-time top headlines using NewsAPI.
@@ -28,7 +31,7 @@ News-Senti is a web-based sentiment analysis tool that fetches the latest news h
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/LightYagami625/NEWS-SENTIMENT-ANALYSIS.git
    cd News-Sentiment-Analysis
    ```
 
@@ -49,6 +52,7 @@ News-Senti is a web-based sentiment analysis tool that fetches the latest news h
 4. **Configure API Key**
    - This project uses NewsAPI to fetch headlines.
    - Open `src/config.py` and replace the `API_KEY` variable with your own API key from [NewsAPI](https://newsapi.org/).
+   - Create a new API key with your account and paste the key in src/config.py
 
 ## Usage
 
@@ -86,16 +90,6 @@ News-Sentiment-Analysis/
 └── README.md            # Project documentation
 ```
 
-## API Endpoints
-
-The application also exposes an endpoint for JSON responses:
-
-- **GET /scrape**
-    - Parameters:
-        - `category` (optional): e.g., 'technology', 'sports'
-        - `query` (optional): Search term
-        - `api` (optional): Set to '1' to receive a JSON response instead of HTML.
-    - Example: `http://127.0.0.1:5000/scrape?category=technology&api=1`
 
 ## License
 
