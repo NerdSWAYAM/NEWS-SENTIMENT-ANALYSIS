@@ -2,7 +2,9 @@
 
 News-Senti is a web-based sentiment analysis tool that fetches the latest news headlines and evaluates their sentiment using Natural Language Processing (NLP). It categorizes news into Positive, Negative, or Neutral and provides a sentiment score for each article.
 
-## Demo Screen Shot
+Go try it - [https://news-senti.onrender.com/]
+
+## Demo Screen
 ![sc](static/sc01.png)
 
 ## Features
